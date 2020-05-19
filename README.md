@@ -1,11 +1,6 @@
-# app
+# iShop
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
-# react-loopback4-ecommerce
-This is an eCommerce project developed using reactjs, context api, nextjs, nodejs , mongodb , redis and IBM loopback 4 as a server side framework .. it's SEO friendly .
-
-
-# iShop - eCommerce 
 
 ### `How to run it ? `
 ```
