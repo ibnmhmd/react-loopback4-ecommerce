@@ -5,10 +5,10 @@
 ### `How to run it ? `
 ```
 - clone this project.
-- switch to *client_src* folder under the root project and run *npm i* to download the client side dependencies .
+- switch to *client* folder under the root project and run [`npm i`] to download the client side dependencies .
 - switch back to the root folder and run *npm i* again to download the server side dependencies.
-- run *yarn start* / *npm run start* to build the client side and copy it to the server root folder and start the project.
-- the project immediately starts on port 3001
+- run *npm run build-client* to build the client side project and copy the build to the server directory from which loopback will serve the files then *npm start* to kickoff the project.
+- the project immediately starts on port 3001, navigate to localhost:3001 to see it.
 ```
 
 ### `Server side project`
