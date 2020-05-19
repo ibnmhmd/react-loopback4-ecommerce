@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Float Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="float-panel.js"></script>
+    <style>
+        body {margin:0;padding:0;font-family:Arial, sans-serif;font-size:14px;background:#f6f6f6;}
+        li {padding:10px 0;}
+        code {color:green;}
+        .img-responsive {
+            display: block;
+            width:100%;
+            height: auto;
+            max-width:500px;
+        }
+        .main-content {
+            padding:70px;
+            margin-right:300px;
+        }
+         
+        #vertical-nav a {
+            text-transform:uppercase;
+            display:block;
+            text-align:center;
+            font:bold 20px/50px Arial;
+            text-decoration:none;
+            color:#666;
+            transition:color 0.25s;
+        }
+
+        #vertical-nav a.active,  #vertical-nav a:hover {
+            color:#b49901;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .floatWrapper {float:none!important;}       
+            .float-panel {position:static!important;}
+            .main-content {padding:20px;margin-right:0px;}
+        }
+    </style>
+</head>
+<body>
+    <img src="imgs/about-us.gif" class="img-responsive" style="margin:30px auto;" />
+    <div style="max-width:1000px;margin:0 auto;background-color:white;">
+        <div class="floatWrapper" style="float:right;">
+            <div class="float-panel" data-top="0" style="width:300px;">
+                <div style="text-align:center;padding-top:30px;">
+                    <img src="imgs/socials.png" style="width:70%;" />
+                </div>
+                <div id="vertical-nav">
+                    <a href="#">Lorem ipsum</a>
+                    <a class="active" href="#">Tincidun</a>
+                    <a href="#">Donec</a>
+                    <a href="#">Erat</a>
+                    <a href="#">Nunc finibus</a>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <h1>Float Panel</h1>
+            <p>Scroll your screen to see the right navigation bar is always present at the top of the visible part of the screen, regardless of the scroll position.</p>
+            <ul>
+                <li>Pure JavaScript(3kb). jQuery is not required.</li>
+                <li>Cross platform and browser support</li>
+                <li>Completely <strong>FREE</strong> to use.</li>
+            </ul>
+            <p>&nbsp;</p>
+            <h1>How to float:left (or right)?</h1>
+            <p>The sticky feature is actually the <code>{position:fixed;}</code> style set through the script <em>float-panel.js</em>.</p>
+            <p>If you want to float the panel to the left or right (like this demo that floats the panel to the right), you need to wrap the float panel with a DIV element, and style the DIV to <code>float:left</code> or <code>float:right</code>.</p>
+            <p>Do not set <code>float:left</code> (or <code>float:right</code>) style directly to the Float Panel as it will make the panel not positioned properly when it becomes <code>position:fixed</code>.</p>
+            <p>&nbsp;</p>
+            <h1>Responsive Layout</h1>
+            <p>Resize the window size to smaller than 800px in width, and you will see both the <strong>sticky</strong> feature and the <code>float:right</code> style are gone. 
+            It is the responsive layout we want for mobile screens. This can be easily configured with the CSS @media queries:</p>
+            <code><pre>@media only screen and (max-width: 800px) {
+    .floatWrapper {float:none!important;}       
+    .float-panel {position:static!important;}
+    .main-content {padding:20px;margin-right:0px;}
+}</pre></code>
+            <p>For details please view the source code of this HTML document.</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p><a href="http://www.menucool.com/ui/float-panel">Full documentation of the Float Panel</a>.</p>
+            <p>&nbsp;</p>
+            <img src="imgs/about-us.gif" class="img-responsive" style="max-width:300px;" />
+            <div style="height:300px"></div>
+        </div>
+    </div>
+</body>
+</html>

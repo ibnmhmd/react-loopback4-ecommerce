@@ -1,0 +1,74 @@
+.modal
+{
+    opacity: 1!important;
+}
+.modal.fade .modal-dialog{
+    transform : none!important;
+}
+@keyframes modalFade {
+    from {transform: translateY(-50%);opacity: 0;}
+    to {transform: translateY(0);opacity: 1;}
+  }
+  
+  .modal {
+    animation-name: modalFade;
+    animation-duration: .3s;
+  }
+  .modal-header>div{
+      font-weight: bold!important;
+      color: black;
+  }
+  .modal-body{
+    font-weight: bold;
+    color: black;
+  }
+  .error{
+    color: darkred;
+  }
+  .modal-open{
+      overflow: visible!important;
+  }
+  .__quickItem_no_small{
+
+  }
+  .anchor{
+      text-decoration: underline;
+  }
+  .anchor:hover{
+      cursor: pointer;
+  }
+  .green{
+      color : darkgreen;
+  }
+  .__quickItem_aqty{
+      border-bottom: 1px solid #c2c2c2;
+
+  }
+  .__quick_item_orp{
+      font-size: 1.4rem!important;
+  }
+  .__quick_item_newp{
+      font-size: 1.58rem!important;
+  }
+  .__quick_item_price_note{
+      border-left: 1px solid #c2c2c2;
+  }
+  .__quick_item_delivery{
+      line-height: 1.5rem;
+      margin: 1.4rem 0;
+  }
+  .__quick_item_price_note_market{
+      line-height: 1.2rem;
+      margin: .2rem 0;
+  }
+  .__quick_item_delivered_by_us small {
+      margin-left: 1rem;
+  }
+  .__quick_item_full_view{
+      margin-top: .8rem;
+  }
+  .__quick_item_font_awsome{
+      color: black;
+      font-size: 13px;
+      margin-right: .5rem;
+  }

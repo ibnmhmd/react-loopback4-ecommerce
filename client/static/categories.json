@@ -1,0 +1,39 @@
+{
+  "categories" : {
+               "root" : [{
+                        "parent" : "men",
+                        "firstLevel":[
+                            {
+                              "root": 
+                                   [ 
+                                     {
+                                         "name": "clothing",
+                                         "secondLevel" : [{
+                                            "category": "hoodies and sweaters"
+                                           },
+                                           {
+                                            "category": "hoodies and sweaters"
+                                           },
+                                           {
+                                            "category": "hoodies and sweaters"
+                                           }
+                                           ]
+                                        },
+                             {
+                              "category":"accessories",
+                              "secondLevel": [{
+                                            "category": "hoodies and sweaters"
+                                           },
+                                           {
+                                            "category": "hoodies and sweaters"
+                                           },
+                                           {
+                                            "category": "hoodies and sweaters"
+                                           }
+                                           ]
+                            }
+                        ]
+                       
+               }]
+ }
+}

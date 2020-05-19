@@ -1,0 +1,13 @@
+{
+  "name": "ds",
+  "connector": "mongodb",
+  "url": "",
+  "host": "",
+  "port": 27017,
+  "user": "",
+  "password": "",
+  "database": "",
+  "useNewUrlParser": true,
+  "allowExtendedOperators" : true,
+  "useUnifiedTopology": true
+}

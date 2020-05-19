@@ -1,0 +1,72 @@
+version: '3.7'
+
+services: 
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    image: ishop-client-image
+    container_name: ishop-client-container
+    volumes: 
+      - ./client/:/usr/src/app/client
+    ports: 
+      - "3000:3000"
+    networks:
+      - ishop-network 
+    environment: 
+      - NODE_ENV=development
+  server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: ishop-server-image
+    container_name: ishop-server-container
+    volumes: 
+      - .:/usr/src/app
+    env_file: .env
+    environment: 
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_USER:${MONGODB_USER}
+      - MONGODB_DB=${MONGODB_DB}
+      - ROOT_DIR=${ROOT_DIR}
+      - VIEW_EXTENSION=${VIEW_EXTENSION}
+      - PAGE_ID=${PAGE_ID}
+    depends_on: 
+      - mongo
+      - redis
+    ports: 
+      - "3001:3001"
+    command: npm run build-client-docker && npm start
+    networks: 
+      - ishop-network
+  mongo:
+    image: mongo:latest
+    container_name: ishop-mongo-container
+    hostname: mongo
+    restart: always
+    env_file: .env
+    environment: 
+        MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+        MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+        MONGO_INITDB_DATABASE: ${MONGODB_DB}
+    ports: 
+      - "27017:27017"
+    networks: 
+      - ishop-network
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: ishop-redis-container
+    ports: 
+      - "6379:6379"
+    environment: 
+      - REDIS_REPLICATION_MODE=master
+
+networks: 
+    ishop-network:
+        driver: bridge
+
+    
+
+

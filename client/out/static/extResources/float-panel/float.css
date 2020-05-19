@@ -1,0 +1,238 @@
+﻿
+/* ---------------- For sticky header: class="float-panel"  ------------------*/
+.float-panel {
+    width:100%;background:white;z-index:300;padding:30px 0;transform: translateZ(0);
+    transition:all 0.5s; /* Effect for switching from .fixed to static */
+}
+.float-panel .content-area {margin:10px auto;}
+.float-panel a {font-size:16px;text-decoration:none;color:#444;display:inline-block;padding:10px 20px;}
+.float-panel .fa-gg {color:#F0595C;font-size:30px;vertical-align:middle;transition:all 1s;}
+/* when class="float-panel fixed" */
+.fixed {box-shadow:0 2px 6px rgba(0,0,0,0.2);padding:4px 0;animation:slide-down 0.7s;}
+.fixed .fa-gg {transform: rotate(360deg); }
+@keyframes slide-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    } 
+    100% {
+        /* opacity: 0.9; */
+        transform: translateY(0);
+    } 
+}
+
+
+
+/* ---------------- For Animation on Scroll ---------------- */
+.slideanim {
+    visibility:hidden;
+    visibility:visible\9;/*For old IE browsers IE6-8 */
+}
+.slideanim.slide {visibility: visible; animation:slide 1s;}
+.slideanim::after {
+    /* useful when its child elements are float:left; */
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(50%);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    } 
+}
+
+
+/*-------- Generic styles for the page ------------------*/
+
+
+html {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+}
+
+body {
+    font: normal 15px Calibri,Helvetica,Verdana,sans-serif;
+    line-height: 1.8;
+    color: #818181;
+    margin: 0;
+}
+footer {
+    display:block;
+    padding:30px;
+}
+
+section {
+    display:block;
+    padding:60px;
+}
+
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*.col-33, .col-40, or .col-60 should be immediate children of .row */
+.col-33 { float:left; width:33.3333%; }
+.col-40 { float:left; width:40%; }
+.col-60 { float:left; width:60%; }
+
+.row .fa {
+    font-size:14em;
+    color:#679;
+}
+.col-33 .fa {
+    font-size:4em;
+    color:#679;
+}
+
+@media (max-width: 768px) {
+    section {
+        padding:20px 8px;
+    }
+    .col-33, .col-40, .col-60 {
+        float:none;
+        width:100%;
+    }
+}
+
+.bg-gray {
+    background-color:#F4F4F4;
+}
+.text-center {
+    text-align:center;
+}
+h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #303030;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #303030;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+
+
+
+/* ---------------- For the Responsive Image Grid. For details visit: www.menucool.com/ui/use-image-sprites-in-responsive-image-grids ---------------- */
+
+#rig {
+	max-width:900px;
+	margin:0 auto; /*center aligned*/
+	padding:0;
+	font-size:0; /* Remember to change it back to normal font size if have captions */
+	list-style:none;
+	background-color:none;
+}
+#rig li {
+	display:inline-block;
+	*display:inline;/*for IE6 - IE7*/
+	width:25%;
+	vertical-align:middle;
+	box-sizing:border-box;
+	margin:0;
+	padding:0;
+}
+
+/* The wrapper for each item */
+.rig-cell {
+	margin:12px;
+	box-shadow:0 1px 4px rgba(0,0,0,0.4);
+	padding:16px;
+	border:none;
+	color:#555;
+	background-color:white;
+	text-decoration:none;
+	text-align:center;
+	display:block;
+	position: relative;
+	overflow:hidden;
+}
+
+.rig-cell h3 {
+	font-size:18px;
+	font-family:'Oswald', sans-serif;
+	font-weight:normal;
+}
+
+/* If have the image layer */
+.rig-img {
+	display:block;
+	border:none;
+	width:100%;
+	height:0;
+    padding-top:83.461538%;
+    background-size:cover;
+	background-color:white;
+	background-image:url(imgs/web-ui.jpg);
+    background-repeat:no-repeat;
+	position:relative; /* Make its pseudo :after to be relative to it. */
+}
+.rig-img:after{
+	position:absolute;
+	top:20px;right:20px;bottom:20px;left:20px;
+	border:1px solid #fff;
+	content:'+';
+	color:white;
+	padding-top:14%;
+	font-size:30px;
+	opacity:0;
+	filter:alpha(opacity=0);
+	transition:all 0.3s;
+	transform:scale(0);
+}
+
+#rig li:hover .rig-img:after {
+	opacity:1;
+	transform:scale(1);
+}
+
+/* If have the overlay layer */
+.rig-overlay {
+	position: absolute;
+	display:block;
+	top:0;left:0;bottom:0;right:0;
+	margin:auto;
+	background:white;
+	background-size:50px 50px;
+	opacity:0;
+	filter:alpha(opacity=0);/*For older IE*/
+	transition:all 0.3s;
+}
+#rig li:hover .rig-overlay {
+	opacity:0.5;
+}
+
+@media (max-width: 9000px) {
+	#rig li {width:25%;}
+}
+
+@media (max-width: 800px) {
+	#rig li {width:33.33%;}
+}
+
+@media (max-width: 500px) {
+	#rig li {width:50%;}
+}
+
+@media (max-width: 350px) {
+	#rig li {width:100%;}
+}

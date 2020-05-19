@@ -1,0 +1,75 @@
+version: '3.7'
+
+services: 
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    image: ishop-client-image
+    container_name: ishop-client-container
+    ports: 
+      - "3000:3000"
+    networks:
+      - ishop-network 
+    environment: 
+      - NODE_ENV=development
+  server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: ishop-server-image
+    container_name: ishop-server-container
+    command: npm start
+    env_file: .env
+    environment: 
+      - MONGODB_HOST=mongo
+      - MONGODB_PASSWORD=UYGuAav7Zbz1Wwsw
+      - MONGODB_USER=aminemhmd
+      - MONGODB_DB=ishopdb
+      - ROOT_DIR=${ROOT_DIR}
+      - VIEW_EXTENSION=${VIEW_EXTENSION}
+      - PAGE_ID=${PAGE_ID}
+    depends_on: 
+      - mongo
+      - redis
+    ports: 
+      - "3001:3001"
+    networks: 
+      - ishop-network
+  mongo:
+    image: mongo:latest
+    restart: always
+    container_name: ishop-mongo-container
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: aminemhmd
+      MONGO_INITDB_ROOT_PASSWORD: UYGuAav7Zbz1Wwsw
+      MONGO_INITDB_DATABASE: ishopdb
+    volumes: 
+      - data-volume:/data/db
+    ports: 
+      - "27017:27017"
+    networks: 
+      - ishop-network
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: ishop-redis-container
+    volumes: 
+      - data-volume:/var/lib/redis
+    ports: 
+      - "6379:6379"
+    environment: 
+      - REDIS_REPLICATION_MODE=master
+
+networks: 
+    ishop-network:
+        driver: bridge
+  
+volumes: 
+    data-volume:
+    node-modules:
+    web-root:
+        driver: local
+    
+
+

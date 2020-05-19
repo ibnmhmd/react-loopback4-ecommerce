@@ -1,0 +1,27 @@
+  /**** Registeration style start ***/
+  .__registeration{
+    
+}
+.__registeration_header , .__registeration_sign_in{
+    margin-bottom: 0px!important;
+}
+.__registeration_sign_in{
+    color: gray;
+}
+.__registeration_sign_in > a{
+    color: #428bca;
+}
+.__registeration_sign_in > a:hover{
+    cursor: pointer;
+    color: orange;
+}
+.__registration_submit:hover{
+    background: orange!important;
+}
+.__registration_form_wrapper{
+    margin: 0 25rem;
+}
+.reg-error {
+    color: red;
+    font-weight : 600;
+}

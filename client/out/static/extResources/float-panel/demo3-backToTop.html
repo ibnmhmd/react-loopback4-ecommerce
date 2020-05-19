@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Back to Top Arrow</title>
+    <script src="float-panel.js"></script>
+    <style>
+        body {font-family:Verdana, sans-serif;}
+        p {padding:20px 0;}
+
+        #backtop {
+	        position: fixed;
+            left:auto;right: 20px;top:auto;bottom: 20px;
+	        outline: none;
+            overflow:hidden;
+            color:#fff;
+            text-align:center;
+            background-color:rgba(49,79,96,0.84);
+            height:40px;
+            width:40px;
+            line-height:40px;
+            font-size:14px;
+            border-radius:2px;
+            cursor:pointer;
+            transition:all 0.3s linear;
+            z-index:999999;
+
+            opacity:1;
+            display:none;
+        }
+        #backtop:hover {
+            background-color:#27CFC3;
+        }
+        #backtop.mcOut {
+            opacity:0;
+        }
+    </style> 
+</head>
+<body>
+    <div id="backtop">&#9650;</div>
+    <div style="width:600px;margin:100px auto;">
+        <h1>Scroll Back to Top Arrow</h1>
+        <p>&nbsp;</p>
+        <h3>DEMO</h3>
+        <p>Scroll down the page to see the floating 'Back to Top' arrow in the bottom corner. Click the arrow to return to the top.</p>
+        <p>For details please visit <a href="/ui/back-to-top-arrow">Menucool Back-to-Top Arrow</a></p>
+        <p style="background:#679;text-align:center;">
+            <a href="#"><img src="imgs/about-us.gif" /></a>
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at nisl vel dolor cursus suscipit.
+            Donec et massa sollicitudin, vehicula nisi a, commodo dolor. In id auctor tellus, vel bibendum ex.
+        </p>
+        <p>
+            Suspendisse eget dui eleifend, tincidunt purus at, fermentum lorem. Ut sed purus turpis.
+            Suspendisse tincidunt augue felis, ut congue massa ultrices id. Aliquam erat volutpat.
+            Nulla imperdiet leo quis sem ultrices, et imperdiet nisl cursus.
+        </p>
+        <p>
+            Suspendisse lacinia efficitur massa, eget varius turpis. Sed gravida vitae nunc in luctus.
+            Nullam consectetur sapien eu turpis euismod, sit amet interdum elit maximus. Fusce odio urna,
+            feugiat fermentum pharetra pretium, interdum sed urna. Pellentesque habitant morbi tristique
+            senectus et netus et malesuada fames ac turpis egestas. Suspendisse suscipit erat a magna pharetra,
+            id aliquet est elementum. Suspendisse potenti.
+        </p>
+        <p>
+            Etiam pellentesque vehicula elit. Cras eu nulla orci. Suspendisse porttitor, turpis sit amet ullamcorper tempor,
+            libero turpis feugiat odio, ac dictum est mi ullamcorper sapien. Nam a nulla quis nisi vestibulum tincidunt.
+        </p>
+        <p>
+            Proin vel urna rhoncus, elementum erat ac, mattis sem. Cras neque sapien, tristique a imperdiet in, iaculis id elit.
+            Ut sagittis nunc non sem sollicitudin laoreet. Duis leo enim, auctor in augue eget, cursus ultricies nulla.
+            Mauris lectus neque, imperdiet non risus in, malesuada tincidunt justo.
+            Mauris venenatis lacus viverra ultricies elementum. Cras dignissim laoreet elit vel rhoncus.
+            Etiam fermentum nibh ut viverra semper.
+        </p>
+    </div>
+</body>
+</html>

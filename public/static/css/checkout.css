@@ -1,0 +1,97 @@
+.__checkout_items_count:hover{
+    cursor: pointer;
+}
+.__checkout_icons{
+    margin-right: 10px;
+}
+
+.__checkout_btns a:nth-child(3){
+    margin: .6rem 0;
+}
+.__checkout_btns p {
+    background: #f0f0f0;
+    padding: 1rem;
+    color: black;
+}
+#basketSummary p , #shippingAddress p , #itemsShipping p{
+    margin: 0;
+}
+.__checkout_confirm_btn i{
+    margin-left: 1rem;
+}
+.__checkout_add_new_addr:hover {
+    cursor: pointer;
+    text-decoration: underline!important;
+}
+.__checkout_save_new_add{
+    width: auto;
+    margin: 0 1rem;
+}
+.modal-open .modal{
+    overflow-y: hidden!important;
+}
+.__checkout_address_label{
+    text-decoration: underline;
+    font-weight: bold;
+}
+.__checkout_new_address_wrapper  {
+    background: #f0f0f0;
+    border-radius: 8px;
+    margin: 1rem;
+
+}
+.__checkout_new_address_wrapper .__cart_actions:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+.__checkout_reset_payment {
+    text-decoration: underline!important;
+}
+.__checkout_reset_payment:hover{
+    cursor: pointer;
+}
+.__checkout_delivery_note{
+    color:green;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size : 18px;
+}
+
+.__checkout_items_final {
+    background: #f0f0f0;
+}
+.__checkout_items_final > p {
+    font-weight: bold;
+    text-decoration: underline;
+}
+.__checkout_items {
+    border-bottom: 1px solid black;
+    background: #e8e8e8;
+}
+.__checkout_edit_basket{
+    float: right;
+}
+.__checkout_edit_basket:hover {
+    cursor: pointer;
+    text-decoration: underline!important;
+}
+.__checkout_bold{
+    font-weight: bold;
+}
+.__checkout_erros{
+    margin: 1rem 0;
+    padding : 0 1rem;
+    border: 1px solid black;
+}
+.__checkout_erros h5 {
+    font-weight: bold;
+}
+.__checkout_erros span {
+    text-decoration: underline;
+}
+.__checkout_btns{
+    margin-bottom: 3rem;
+}
+.__checkout_congrats{
+    color : green;
+}
