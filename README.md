@@ -2,12 +2,13 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
-### `How to run it ? `
+### `How to run it locally ? `
 ```
 - clone this project.
-- switch to *client* folder under the root project and run [`npm i`] to download the client side dependencies .
+- switch to *client* folder under the root project and run *npm i* to download the client side dependencies .
 - switch back to the root folder and run *npm i* again to download the server side dependencies.
-- run *npm run build-client* to build the client side project and copy the build to the server directory from which loopback will serve the files then *npm start* to kickoff the project.
+- run *npm run build-client* to build the client side project and copy the build to the server directory from which loopback will serve the 
+files then *npm start* to kickoff the project.
 - the project immediately starts on port 3001, navigate to localhost:3001 to see it.
 ```
 
