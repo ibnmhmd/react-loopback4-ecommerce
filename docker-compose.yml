@@ -22,10 +22,10 @@ services:
     command: npm start
     env_file: .env
     environment: 
-      - MONGODB_HOST=mongo
-      - MONGODB_PASSWORD=UYGuAav7Zbz1Wwsw
-      - MONGODB_USER=aminemhmd
-      - MONGODB_DB=ishopdb
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_USER=${MONGODB_USER}
+      - MONGODB_DB=${MONGODB_DB}
       - ROOT_DIR=${ROOT_DIR}
       - VIEW_EXTENSION=${VIEW_EXTENSION}
       - PAGE_ID=${PAGE_ID}
@@ -41,9 +41,9 @@ services:
     restart: always
     container_name: ishop-mongo-container
     environment: 
-      MONGO_INITDB_ROOT_USERNAME: aminemhmd
-      MONGO_INITDB_ROOT_PASSWORD: UYGuAav7Zbz1Wwsw
-      MONGO_INITDB_DATABASE: ishopdb
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGODB_DB}
     volumes: 
       - data-volume:/data/db
     ports: 
