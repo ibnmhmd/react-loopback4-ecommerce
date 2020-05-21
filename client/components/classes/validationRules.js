@@ -69,7 +69,6 @@ const emailValidator = (field) => {
 }
 
 const passwordValidator = (field) => {
-    console.log(field)
     const { value , validationRules , ref ,name } = field ;
     let pattern = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
     const result = pattern.test(value);

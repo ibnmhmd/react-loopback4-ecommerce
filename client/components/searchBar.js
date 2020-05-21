@@ -13,7 +13,7 @@ const SearchBarComponent = () => (
     <Col sm = {2} md={2}>
      <div className = "__searchbar_logo" >
        <Link href= {{pathname : "/"}}>
-         <img src = "http://demo.mythemeshop.com/ecommerce-demo3/files/2015/07/logo-transparent.png" className = "img-responsive"/>
+         <img src = "../static/img/logo/ishop.png" className = "img-responsive"/>
       </Link>
       </div>
          </Col>

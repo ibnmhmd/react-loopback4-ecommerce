@@ -70,6 +70,7 @@ export default class SigninComponent extends React.PureComponent {
       let response = [] , self = this;
       let currentElement = JSON.parse(event.target.dataset.formdata);
       response = validate.validate(event);
+      console.log(response[0]);
         /**** remove invalid fields ****/
         if(response[0].length == 0){
            this.removeInvalidElement(currentElement);  
@@ -77,10 +78,7 @@ export default class SigninComponent extends React.PureComponent {
           /**** set the returned validation values ***/
           response[0].map((resp , index ) => {
              undefined == self.state.formFields.find((_) => _.name == resp.name) ?
-             self.setState({formFields : 
-              [...self.state.formFields , resp ] }, () => {
-                 this.handleSubmitState(!(self.state.formFields.length == 2 ));
-            }) : null;
+             this.setFields(resp) : this.updateFields(resp);
           });
           /****** ends *****/
       }   
@@ -90,10 +88,21 @@ export default class SigninComponent extends React.PureComponent {
         this.handleSubmitState(!(this.state.formFields.length == 2 ));   
       }); 
     }
+    setFields(resp){
+      this.setState({formFields : 
+        [...this.state.formFields , resp ] }, () => {
+           this.handleSubmitState(!(this.state.formFields.length == 2 ));
+      })
+    }
+    updateFields(resp){
+      let fields = this.state.formFields;
+      fields.map((_f , i ) => _f[resp.name] = resp.value );
+      this.setState({formFields : fields});
+    }
     async login() {
       let requestData = {} , self = this ;
       this.state.formFields.map((field , index) => {
-        requestData[field.name] = field.value;
+        requestData[field.name] = field[field.name] ? field[field.name] : field.value;
       });
         this.setState({ logingIn : true , failed : false , 
         signInLabel : "Logging in .." , showError : false,
@@ -103,7 +112,6 @@ export default class SigninComponent extends React.PureComponent {
           self.handleSubmitState(true);
           self.setState({signInLabel : "Successfully LoggedIn." , logingIn : false , loggedIn : true });
           localStorage.setItem("iShopUserToken" , response.data.token); 
-          console.log("Calling get profile");
            await self.getProfile(response.data.token); 
         })
         .catch( (error) => {

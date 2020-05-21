@@ -128,7 +128,7 @@ export default class SignupComponent extends React.PureComponent {
       this.handleSubmitState(true);
       let requestData = {};
       this.state.formFields.map((field , index) => {
-        requestData[field.name] = field.value;
+        requestData[field.name] = field[field.name] ? field[field.name] : field.value;
       });
 
       delete requestData['cPassword'];
@@ -186,7 +186,6 @@ export default class SignupComponent extends React.PureComponent {
              response = [];
              this.removeInvalidElement(elem);          
            }
-           console.log("after 1 sec");
            resolve();
         }, 1000);
       }) 
@@ -211,14 +210,10 @@ export default class SignupComponent extends React.PureComponent {
           /*** if("password" == currentElement.name || "cPassword" == currentElement.name){
             this.comparePasswords(response , currentElement);
           } ***/
-          console.log("immediate");
           /**** set the returned validation values ***/
           response[0].map((resp , index ) => {
              undefined == self.state.formFields.find((_) => _.name == resp.name) ?
-             self.setState({formFields : 
-              [...self.state.formFields , resp ] }, () => {
-                 this.handleSubmitState(!(self.state.formFields.length == 5 ));
-            }) : null;
+             this.setFields(resp) : this.updateFields(resp);
           });
           /****** ends *****/
       }   
@@ -231,6 +226,17 @@ export default class SignupComponent extends React.PureComponent {
     }
     componentDidMount(){
       validate.disabledElem(this.submitRef);
+    }
+    setFields(resp){
+      this.setState({formFields : 
+        [...this.state.formFields , resp ] }, () => {
+           this.handleSubmitState(!(this.state.formFields.length == 2 ));
+      })
+    }
+    updateFields(resp){
+      let fields = this.state.formFields;
+      fields.map((_f , i ) => _f[resp.name] = resp.value );
+      this.setState({formFields : fields});
     }
     render() {
       const { value } = this.context;
