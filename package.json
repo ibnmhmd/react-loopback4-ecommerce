@@ -9,7 +9,7 @@
   "main": "index.js",
   "engines": {
     "node": ">=10",
-    "typescript":"~3.8.3"
+    "typescript": "~3.8.3"
   },
   "scripts": {
     "build": "tsc",
@@ -20,9 +20,8 @@
     "start": "npm run build && node -r source-map-support/register .",
     "prepare": "npm run build",
     "build-client": "cd client && yarn deploy-client",
-    "build-vercel" : "cd client && yarn install && yarn deploy-client",
+    "build-vercel": "cd client && yarn install && yarn deploy-client",
     "tsc": "tsc"
-
   },
   "repository": {
     "type": "git"
@@ -67,9 +66,9 @@
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
+    "@loopback/testlab": "^3.1.5",
+    "@types/node": "^10.17.19",
     "rimraf": "^3.0.2",
-    "source-map-support": "^0.5.16",
-    "@loopback/testlab": "^3.0.1",
-    "@types/node": "^10.17.19"   
+    "source-map-support": "^0.5.16"
   }
 }
