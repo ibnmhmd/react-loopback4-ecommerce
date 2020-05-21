@@ -22,7 +22,7 @@
     "build-client": "cd client && yarn deploy-client",
     "build-vercel": "cd client && yarn install && yarn deploy-client",
     "tsc": "tsc",
-    "heroku-postbuild": "cd client && npm i && npm run deploy-client"
+    "heroku-postbuild": "cd client && npm i && npm run deploy-heroku"
   },
   "repository": {
     "type": "git"

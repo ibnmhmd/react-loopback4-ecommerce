@@ -7,6 +7,7 @@
     "start": "next start",
     "export": "next export",
     "deploy-client": "yarn build && yarn export && yarn copy",
+    "deploy-heroku": "npm run build && npm run export && npm run copy",
     "copy": "shx cp -r out/* ../public/"
   },
   "dependencies": {
