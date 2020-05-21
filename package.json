@@ -20,8 +20,7 @@
     "start": "npm run build && node -r source-map-support/register .",
     "prepare": "npm run build",
     "build-client": "cd client && yarn deploy-client",
-    "build-vercel" : "cd client && yarn install && yarn deploy-client",
-    "postinstall": "npm start"
+    "build-vercel" : "cd client && yarn install && yarn deploy-client"
   },
   "repository": {
     "type": "git"
