@@ -92,9 +92,9 @@ const links = [
                              </li>
                              <li className="col-sm-3">
                                  <ul>
-                                     <li className="dropdown-header">Features</li>
-                                     <li><Link href='/products/[id]' as = "/products/men-auto carousel"><a>Auto Carousel</a></Link> </li>
-                                     <li><Link href='/products/[id]' as = "/products/men-carousel control"><a>Carousel Control</a></Link></li>
+                                     <li className="dropdown-header">Clothes</li>
+                                     <li><Link href='/products/[id]' as = "/products/men-auto carousel"><a>Jeans</a></Link> </li>
+                                     <li><Link href='/products/[id]' as = "/products/men-carousel control"><a>Pants</a></Link></li>
                                      <li><a href="#">Left & Right Navigation</a></li>
                                      <li><a href="#">Four Columns Grid</a></li>
                                      <li className="divider"></li>
