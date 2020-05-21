@@ -8,7 +8,8 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=10"
+    "node": ">=10",
+    "typescript":"~3.8.3"
   },
   "scripts": {
     "build": "tsc",
@@ -19,7 +20,8 @@
     "start": "npm run build && node -r source-map-support/register .",
     "prepare": "npm run build",
     "build-client": "cd client && yarn deploy-client",
-    "build-vercel" : "cd client && yarn install && yarn deploy-client"
+    "build-vercel" : "cd client && yarn install && yarn deploy-client",
+    "postinstall": "npm start"
   },
   "repository": {
     "type": "git"
