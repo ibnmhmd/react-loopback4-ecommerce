@@ -16,7 +16,6 @@ import {
   Where,
 } from '@loopback/repository';
 import { UserRepository } from '../repositories';
-import { CONSTANT } from '../bindings/constants';
 import { UserCredentialsInterface } from '../interfaces/user-credentials-interface';
 import {UserCredentials} from '../models/user-credentials.model';
 import {PasswordHasherBindings} from '../bindings/application.bindings';

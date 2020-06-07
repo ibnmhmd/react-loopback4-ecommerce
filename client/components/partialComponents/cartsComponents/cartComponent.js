@@ -5,6 +5,10 @@ import {LoaderComponent , SuccessComponent , FailureComponent } from '../../stat
 import {CartContext} from '../../contextAPI/cartContext';
 import EmptyBasket from './commonComponents/emptyBasketComponent';
 import {CartItemDrawer} from './commonComponents/itemDrawerComponent';
+import Service from '../../classes/services';
+import ErrorModal from '../../modals/errorModalComponent';
+
+const service = new Service();
 
 function CartComponent (props) {
    const [itemsInCart , setItemsInCart ] = useState([]);
@@ -12,7 +16,12 @@ function CartComponent (props) {
    const [basketQty , setBasketQty ] = useState(0);
    const [itemsSavedForLater , setItemsSavedForLater ] = useState([]);
    const { getCart , addToCheckout , deleteFromCart , getSavedForLater} = useContext(CartContext);
-
+   const [processMessage , setProcessMessage] = useState("");
+   const [ showError, setShowError] = useState(false);
+ 
+   const closeModal = () => {
+     setShowError(false);
+   }
    useEffect(() => {
     let product = getCart();
     let saveForLater = getSavedForLater();
@@ -112,6 +121,7 @@ function CartComponent (props) {
                              </div>                                 
                      </div>
                  </div>
+                 { showError ? <ErrorModal handleClose = { closeModal } show = {showError} errorMessage = {processMessage}/> : null }
              </div>
     </>)
 }
@@ -124,7 +134,12 @@ function SavedForLater(props) {
   const { getCart , addToCart , deleteFromCart,
          deleteFromSavedForLater ,
          getSavedForLater } = useContext(CartContext);
-
+  const [processMessage , setProcessMessage] = useState("");
+  const [ showError, setShowError] = useState(false);
+       
+  const closeModal = () => {
+           setShowError(false);
+  }
   useEffect(()=>{ 
     console.log("called saving ... ")
   },[]);
@@ -139,13 +154,26 @@ function SavedForLater(props) {
   }
   const updateSavedForLaterItems = async (payLoad , operation ) => {
     if("addItem" == operation){
-       await addToCart(payLoad.newItem , "cart")
+       const response = await addToCart(payLoad.newItem , "cart");
+       if(service.sessionTimeout(response)){
+         console.error("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+       }
     }else
     if("deleteItem" == operation){
-       let response = await deleteFromSavedForLater(payLoad.sku);
-      if(response.success){
-        setDeleting(false);
-      }
+       const response = await deleteFromSavedForLater(payLoad.sku);
+       setDeleting(false);
+       if(service.sessionTimeout(response)){
+        setShowError(true);
+        setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+        setTimeout(() => {
+          Router.push("/"); 
+        }, 2000);
+       }else
+       if(!response.success)
+       {
+        setShowError(true);
+        setProcessMessage(response.serverMessage);
+       }
     }
     setMovingToCart(false);
     if(payLoad.callBack) {
@@ -168,5 +196,7 @@ function SavedForLater(props) {
         <h3 style = {{color : '#B12704' , fontWeight: 'bold' , marginBottom: 0}}>AED {props.itemInSavedForLater.newPrice}</h3> 
         <p className = "__cart_was">was AED <strike>{props.itemInSavedForLater.oldPrice}</strike></p>                                 
       </div>
+      { showError ? <ErrorModal handleClose = { closeModal } show = {showError} errorMessage = {processMessage}/> : null }
+
 </div>)
 }

@@ -8,7 +8,7 @@ function ErrorModal(props) {
         <Modal.Header>
           <Modal.Title className = "text-center font-weight-bold text-uppercase">VALIDATION ERROR</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-danger font-weight-bold error" >{props.errorMessage}</Modal.Body>
+        <Modal.Body className="bg-danger font-weight-bold error is_t_center" >{props.errorMessage}</Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={props.handleClose}>
             Close

@@ -49,8 +49,8 @@ export class UserCredentialsService{
     return await this.userRepo.findOne({where : {email : email }});
   } 
 
-   convertToUserProfile(user: User): UserProfile {
-    let userName = '';
+   convertToUserProfile(user: User , userBasketDetails:any): UserProfile {
+    let userName = '' ;
     if (user.firstName) {
       userName = `${user.firstName}`;
     } 

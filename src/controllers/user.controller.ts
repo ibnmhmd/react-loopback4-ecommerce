@@ -17,8 +17,8 @@ import {
   requestBody,
   HttpErrors,
 } from '@loopback/rest';
-import {User , UserCredentials } from '../models';
-import {UserRepository} from '../repositories';
+import {User , UserCredentials, Basket, IshopItem, Cart } from '../models';
+import {UserRepository, BasketRepository, CartRepository} from '../repositories';
 import {NewUserRequestSchema} from './userSchema/new.user.schema';
 import { UserCredentialsServiceBindings , UserLoginServiceBindings ,
    UserSignupServiceBindings , JWTTokenServiceBindings } from '../bindings/application.bindings';
@@ -34,6 +34,8 @@ import _ from 'lodash';
 import { service } from '@loopback/core';
 //import { ItemRepository } from '../repositories/item.repository';
 import { Item } from '../models/item.model';
+import { Utils } from '../utils/systemUtils';
+const ObjectId = require('mongodb').ObjectId;
 
 export class UserController {
   constructor(
@@ -42,7 +44,9 @@ export class UserController {
     @inject(UserCredentialsServiceBindings.USER_SERVICE) public userCredentialsService : any,
     @inject(UserLoginServiceBindings.LOGIN_SERVICE) public loginService : UserService<User, UserCredentialsType>,
     @inject(UserSignupServiceBindings.SIGNUP_SERVICE) public signupService : UserCredentialsInterface<User,UserCredentials>,
-    @inject (JWTTokenServiceBindings.TOKEN_SERVICE) private jwtTokenService : TokenService
+    @inject (JWTTokenServiceBindings.TOKEN_SERVICE) private jwtTokenService : TokenService,
+    @repository(CartRepository) public cartRepository : CartRepository,
+    @repository(BasketRepository) public basketRepository : BasketRepository
     //@repository(ItemRepository) private itemRepo : ItemRepository
   ) {}
 
@@ -84,6 +88,46 @@ export class UserController {
      UC.password = user.password;
      UC.userId = savedUser._id;
      await this.signupService.persistPassword(UC);
+     /***** create basket for the same user ****/
+     let basket = new Basket();
+     basket.creationDate = new Utils().getCurrentSystemDateTime();
+     let createdBasket = await this.userRepository.basket(savedUser._id).create(basket);
+     if(createdBasket){
+      savedUser.basketCreated = true;
+      savedUser.basketId = createdBasket.id;
+      /**** create cart for the basket ****/
+      let cart = new Cart();
+      let basketId = new ObjectId(createdBasket.id);
+      const itemArray : Array<IshopItem> = new Array<IshopItem>();
+      cart.items = itemArray; 
+      let createdCart = await this.basketRepository.cart(basketId).create(cart);
+      let createdWishlist = await this.basketRepository.wishlist(basketId).create(cart);
+      let createdSavedForLater = await this.basketRepository.savedForLater(basketId).create(cart);
+      let createdOrderedItems = await this.basketRepository.orderedItems(basketId).create(cart);
+      if(createdCart){
+          savedUser.cartCreated = true;
+        }else{
+          savedUser.cartCreated = false;
+        }
+        if(createdWishlist){
+          savedUser.wishlistCreated = true;
+        }else{
+          savedUser.wishlistCreated = false;
+        }
+        if(createdSavedForLater){
+          savedUser.savedForLaterCreated = true;
+        }else{
+          savedUser.savedForLaterCreated = false;
+        }
+        if(createdOrderedItems){
+          savedUser.orderedItemsCreated = true;
+        }else{
+          savedUser.orderedItemsCreated = false;
+        }
+     }else{
+      savedUser.basketCreated = false;
+      savedUser.basketResponse = createdBasket;
+     }
      return savedUser;
   }
 
@@ -128,35 +172,31 @@ export class UserController {
        }
     })
     credentials: UserCredentialsType,
-  ): Promise<{ token : string}> {
-     console.log("Request :: " + JSON.stringify(credentials));
-     let userFound : User =  await this.loginService.verifyCredentials(credentials);
-     console.log("User found in login :: " + JSON.stringify(userFound));
-     const userProfile = await this.userCredentialsService.convertToUserProfile(userFound);
-     console.log("user profiles :: "+ JSON.stringify(userProfile));
-     const token = await this.jwtTokenService.generateToken(userProfile);
-     const item : Item = new Item ({
-       name :"belt",
-       price :124,
-       img : "/img.png"
-     });
-     console.log(JSON.stringify(item));
-     let fetchedItem;
-     console.log("Fetching item from redis cache ... ");
-     /***try {
-      fetchedItem = await this.itemRepo.get("products");
-     }catch(e){
-       throw new HttpErrors.ServiceUnavailable("Error connecting to redis .")
-     }
-     console.log("fetched item :: "+ JSON.stringify(fetchedItem));
-     if(null == fetchedItem ){
-       console.log("No item fetched from redis, setting new ...");      
-      const rep = await this.itemRepo.set("products", item);
-      console.log("resp :: " + rep );
-     }****/
-     
-     
-     return  { token } ;
+  ): Promise<{ response : object }> {
+    let response = { success : false , token : '' , message : ''};
+    try{
+      response.success = true;
+      let userFound : User =  await this.loginService.verifyCredentials(credentials);
+      const userProfile = await this.userCredentialsService.convertToUserProfile(userFound);
+      response.token = await this.jwtTokenService.generateToken(userProfile);
+      /***try {
+       fetchedItem = await this.itemRepo.get("products");
+      }catch(e){
+        throw new HttpErrors.ServiceUnavailable("Error connecting to redis .")
+      }
+      console.log("fetched item :: "+ JSON.stringify(fetchedItem));
+      if(null == fetchedItem ){
+        console.log("No item fetched from redis, setting new ...");      
+       const rep = await this.itemRepo.set("products", item);
+       console.log("resp :: " + rep );
+      }****/
+      response.message = 'successfully logged in .';
+    }catch(e){
+      response.success = false;
+      response.token = '';
+      response.message = e.message ;
+    } 
+     return  {response} ;
   }
 
   @get('/users/getProfile', {
@@ -176,9 +216,32 @@ export class UserController {
   async getProfileByUserId(
     @inject(SecurityBindings.USER)
     currentUserProfile: UserProfile): Promise<User> {
-   console.log("user prof :: "+ JSON.stringify(currentUserProfile) );
     const userId = currentUserProfile[securityId];
-    return this.userRepository.findById(userId);
+    let cart = null, wishlist = null , savedForLater = null , orderedItems = null ;
+    let userProfile =  await this.userRepository.findById(userId);
+    let basket = await this.userRepository.basket(userProfile._id).get();
+     if(basket){
+        const basketId = new ObjectId(basket.id);
+        const filter = { fields : { id : true , items : true , basketId : true } };
+        cart = await this.basketRepository.cart(basketId).get(filter);
+        wishlist = await this.basketRepository.wishlist(basketId).get(filter);
+        savedForLater = await this.basketRepository.savedForLater(basketId).get(filter);
+        orderedItems = await this.basketRepository.orderedItems(basketId).get(filter);
+        userProfile['basket'] = basket;
+        if(cart){
+          userProfile.basket.cart = cart;
+        }
+        if(wishlist){
+          userProfile.basket.wishlist = wishlist;
+        }
+        if(savedForLater){
+          userProfile.basket.savedForLater = savedForLater;
+        }
+        if(orderedItems){
+          userProfile.basket.orderedItems = orderedItems;
+        }
+      }
+   return userProfile;
   }
 
   @get('/users/count', {
@@ -302,5 +365,15 @@ export class UserController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.userRepository.deleteById(id);
   }
-
+  @get('/users/checkJWT', {
+    responses: {
+      '200': {
+        description: 'Check JWT validity',
+      },
+    },
+  })
+  @authenticate('jwt')
+  async isValidJWT( @inject(SecurityBindings.USER)currentUserProfile: UserProfile): Promise<{valid:boolean}> {
+    return { valid : true };
+  }
 }

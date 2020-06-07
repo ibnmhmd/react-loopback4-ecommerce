@@ -1,7 +1,11 @@
 import { useState ,useEffect, useContext  } from 'react';
 import {LoaderComponent , SuccessComponent , FailureComponent } from '../../../statelessComponents/loadMoreProductsComponent';
 import {CartContext} from '../../../contextAPI/cartContext';
-
+import ErrorModal from '../../../modals/errorModalComponent';
+import Service from '../../../classes/services';
+import Router from 'next/router';
+const service = new Service();
+const CUST = require('../../../../utils/customerManager');
 export function CartItemDrawer(props) {
     const [itemQty , setItemQty ] = useState([]);
     const [checkQty , setCheckQty ] = useState(false);
@@ -13,7 +17,13 @@ export function CartItemDrawer(props) {
     const [savingForLater , setSavingForLater ] = useState(false);
     const [movingToWishlist , setMovingToWishlist ] = useState(false);
     const { getCart , addToWishlist , deleteFromCart , getSavedForLater , addToSavedForLater} = useContext(CartContext);
+      /****** wishlist message hooks ****/
+    const [processMessage , setProcessMessage] = useState("");
+    const [ showError, setShowError] = useState(false);
   
+    const closeModal = () => {
+      setShowError(false);
+    }
     useEffect(()=>{
        let _arr = [] ;
        for (let i = 1 ; i < props.itemInCart.qty+1; i++){
@@ -39,12 +49,28 @@ export function CartItemDrawer(props) {
         saveForLater : prop.saveForLater , itemInCart : prop.itemInCart } , "deleteItem" );
     }
     const addItemToWishlist = async (prop) =>{
+        if(!CUST.isLoggedInUser()){
+            setProcessMessage("PLEASE LOGIN TO USE THIS FEATURE .")
+            setShowError(true);
+            return false;
+        }
         setMovingToWishlist(true);
-        await deleteItem(prop , false);
+         await deleteItem(prop , false);
         let response = await addToWishlist(prop.itemInCart);
-      if(response.success){
-        setMovingToWishlist(false);
-      }
+            setMovingToWishlist(false);
+          if(service.sessionTimeout(response)){
+            setShowError(true);
+            setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+            setTimeout(() => {
+              Router.push("/"); 
+            }, 2000);
+            return;
+           }else
+            if(!response.success) {
+              setShowError(true);
+              setProcessMessage(response.serverMessage);
+              return;
+          }
     }
     const setQuantity = (e, prop ) => {
       e.persist();
@@ -81,17 +107,32 @@ export function CartItemDrawer(props) {
       }else
       if("deleteItem" == operation){
         let response = await deleteFromCart(payLoad.sku , "cart");
+        if(service.sessionTimeout(response)){
+          setShowError(true);
+          setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+          setMovingToWishlist(false);
+          setTimeout(() => {
+            Router.push("/"); 
+          }, 2000);
+        }else
+        if(!response.success) {
+          setShowError(true);
+          setProcessMessage(response.serverMessage);
+          return;
+       }else
         if(response.success){
           setDeleting(false);
           setQtyAvailable(false);
           if(payLoad.saveForLater) {
-            console.log("saving ..." +   payLoad.itemInCart)
              let response = await addToSavedForLater(payLoad.itemInCart);
              if(response.success){
               setSavingForLater(false);
               payLoad.saveForLater(getSavedForLater());
              }
            }
+        }else{
+          setDeleting(false);
+          setQtyAvailable(false);
         }
         payLoad.cart = getCart();
       }
@@ -128,6 +169,7 @@ export function CartItemDrawer(props) {
              { qtyAvailable ? <SuccessComponent label = "Available" paragraph = {true}/> : null }
              { qtyNotAvailable ? <FailureComponent label = {"["+ outOfStock + "] Too many"} paragraph = {true} /> : null }
         </div>
+        { showError ? <ErrorModal handleClose = { closeModal } show = {showError} errorMessage = {processMessage}/> : null }
   </div>)
   }
   
@@ -135,13 +177,32 @@ export function CartItemDrawer(props) {
   export function WishlistItemDrawer(props) {
     const [deleting , setDeleting ] = useState(false);
     const [movingToWishlist , setMovingToWishlist ] = useState(false);
+    const [processMessage , setProcessMessage] = useState("");
+    const [ showError, setShowError] = useState(false);
   
+    const closeModal = () => {
+      setShowError(false);
+    }
     const deleteItem = async (sku , loader ) => {
       loader ? setDeleting(true) : null;
       let response = await props.deleteItem(sku);
+      if(service.sessionTimeout(response)){
+        setShowError(true);
+        setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+        setTimeout(() => {
+          Router.push("/"); 
+        }, 2000);
+      }else
+       if(!response.success) {
+        setShowError(true);
+        setProcessMessage(response.serverMessage);
+       return;
+      }else
       if(response.success){
           setDeleting(false);
           props.updateWishlist();
+      }else{
+        setDeleting(false);
       }
     }
     const addItemToCart = async (prop) =>{
@@ -150,6 +211,8 @@ export function CartItemDrawer(props) {
           let response = await props.addToCart(prop , "cart");
       if(response.success){
           setMovingToWishlist(false);
+       }else{
+        setMovingToWishlist(false);
        }
    }
 
@@ -168,5 +231,6 @@ export function CartItemDrawer(props) {
           <h3 style = {{color : '#B12704' , fontWeight: 'bold' , marginBottom: 0}}>AED {props.itemInWishlist.newPrice}</h3> 
           <p className = "__cart_was">was AED <strike>{props.itemInWishlist.oldPrice}</strike></p>                                 
         </div>
+        { showError ? <ErrorModal handleClose = { closeModal } show = {showError} errorMessage = {processMessage}/> : null }
   </div>)
   }

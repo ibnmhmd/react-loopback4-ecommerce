@@ -1,6 +1,11 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({settings: {strict: false} , name : 'users_credentials', foreignKeys : {  fk_usercredentials_userId : {
+  name: 'fk_usercredentials_userId',
+  entity: 'User',
+  entityKey: '_id',
+  foreignKey: 'usersId',
+}}})
 export class UserCredentials extends Entity {
   @property({
     type: 'any',
@@ -12,7 +17,7 @@ export class UserCredentials extends Entity {
     type: 'any',
     required: true,
   })
-  userId: any;
+  usersId: any;
 
   @property({
     type: 'any',

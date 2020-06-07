@@ -6,7 +6,7 @@ const getCustomerProfile = () => {
         return {};
     }
 }
-const isUserLoggedIn = () => {
+const isLoggedInUser = () => {
     const profile = getCustomerProfile();
     if(profile && profile.status && "loggedIn" == profile.status){
         return true;
@@ -16,6 +16,7 @@ const isUserLoggedIn = () => {
 }
 const signOut = () => {
     clearItem("customerProfile");
+    clearItem("iShopUserToken");
     return true;
 }
 const clearItem = (item) => {
@@ -23,6 +24,6 @@ const clearItem = (item) => {
 }
 module.exports = {
     getCustomerProfile,
-    isUserLoggedIn,
+    isLoggedInUser,
     signOut
 }

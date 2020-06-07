@@ -19,9 +19,13 @@ expressRouteHandler.get('/info/about-us', function (_req: Request, res: Response
 expressRouteHandler.get('/cart/my-cart', function (_req: Request, res: Response) {
   redirect(res ,`${getPageName(_req.path)}${PAGE_ID}`);
 });
+expressRouteHandler.get('/cart/my-wishlist', function (_req: Request, res: Response) {
+  redirect(res ,`${getPageName(_req.path)}${PAGE_ID}`);
+});
 expressRouteHandler.get('/buy/checkout', function (_req: Request, res: Response) {
   redirect(res ,`${getPageName(_req.path)}${PAGE_ID}`);
 });
+
 function redirect(response : Response , targetPage : String) : void {
   response.sendFile(path.join(__dirname , `${ROOT_DIR}${targetPage}${VIEW_EXTENSION}`));
 }

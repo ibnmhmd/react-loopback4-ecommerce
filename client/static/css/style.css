@@ -183,6 +183,7 @@ body {
     text-shadow: none;
     color: #333;
     border: 1px solid #ddd;
+    border-radius: 7px;
   }
   .__navbar_main_bar{
     background-image: linear-gradient(to bottom,#fff 0,#c1c1c1 100%) !important;
@@ -612,7 +613,7 @@ display: none;
     
   }
   .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next, .carousel-control .icon-prev{
-      font-size: 20px!important;
+      font-size: 15px!important;
   }
   .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next{
       margin-right: 10px!important;
@@ -869,4 +870,10 @@ footer{
     border-right: .3em solid transparent;
     border-bottom: 0;
     border-left: .3em solid transparent;
+}
+.hover-orange:hover{
+    color: darkorange!important;
+}
+button {
+    border-color: inherit;
 }

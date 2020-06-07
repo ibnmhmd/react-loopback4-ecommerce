@@ -7,10 +7,13 @@ import {useContext , useRef , useState , useEffect} from 'react';
 import Router from 'next/router';
 import {SuccessComponent , FailureComponent , LoaderComponent } from '../statelessComponents/loadMoreProductsComponent';
 import Validator from '../classes/validator';
+import Service from '../classes/services';
+
 const validator = new Validator();
+const service = new Service();
 
 function MyVerticallyCenteredModal(props) {
-  const { addToCart , addToWishlist } = useContext(CartContext);
+  const { addToCart , addToWishlist , isLoggedInUser } = useContext(CartContext);
   const addToCartRef = useRef();
   const addToWishlistRef = useRef();
   /******* cart hooks */
@@ -18,6 +21,8 @@ function MyVerticallyCenteredModal(props) {
   const [itemAdded , setItemAdded] = useState(false);
   const [itemFailed , setItemFailed] = useState(false);
   const [addToCartLabel , setAddToCartLabel] = useState("ADD TO CART");
+  const [processMessage , setProcessMessage] = useState("");
+  const [showProcessMsg , setShowProcessMsg] = useState(false);
    /******* ends******/
 
     /******* wishlist hooks */
@@ -39,9 +44,20 @@ function MyVerticallyCenteredModal(props) {
       setItemAdded(true);
       setAddingItem(false);
       itemAdded = true;
-    }else{ 
+    }else
+    if(service.sessionTimeout(response)){
+      setShowProcessMsg(true);
       setItemFailed(true);
-    }
+      setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+    }else
+     if(!response.success){
+      setShowProcessMsg(true);
+      setItemFailed(true);
+      setProcessMessage(response.serverMessage);
+     }else
+      { 
+        setItemFailed(true);
+      }
     setAddToCartLabel(response.message.toUpperCase());
     /***** clear failure msg *****/
     setTimeout(() => {
@@ -54,6 +70,16 @@ function MyVerticallyCenteredModal(props) {
     }, 4000);
   }
   const addItemToWishlist = async (item) => {
+    /***add to wishlist for logged in users only***/
+    const loggedIn = isLoggedInUser();
+    if(!loggedIn){
+      setShowProcessMsg(true);
+      setProcessMessage("Please login to use this feature .");
+      setTimeout(() => {
+        setShowProcessMsg(false);
+      }, 5000);
+      return;
+    }
     setAddToWishlistLabel("ADDING ...");
     setItemAddedToWishlist(false);
     setAddingToWishlist(true);
@@ -65,6 +91,16 @@ function MyVerticallyCenteredModal(props) {
       setItemAddedToWishlist(true);
       setAddingToWishlist(false);
       itemAdded = true;
+    }else
+    if(service.sessionTimeout(response)){
+      setShowProcessMsg(true);
+      setItemFailed(true);
+      setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+    }else
+    if(!response.success){
+      setShowProcessMsg(true);
+      setItemFailed(true);
+      setProcessMessage(response.serverMessage);
     }else{ 
       setWishlistFailed(true);
     }
@@ -139,10 +175,14 @@ function MyVerticallyCenteredModal(props) {
                                { itemAddedToWishlist ?  <SuccessComponent label = "" paragraph = {false} class = "instock"/> : null } 
                                { addingToWishlist ? <LoaderComponent label = "" paragraph = {false}/> : null }
                                { wishlistFailed ?  <FailureComponent label = "" paragraph = {false} class = "outofstock"/> : null } 
-                      </a>                   </Col>
+                      </a>
+                  </Col>
                   <Col xs={12} md={12} className= "__quick_item_full_view" >
                       <CustomButton buttonName = "Full View" fontName = "far fa-eye" Click = {fullView} callBackParam = {props.item.sku} />
                   </Col>
+                  { showProcessMsg ? <Col xs={12} md={12}>
+                       <p className = "error">{processMessage}</p>
+                  </Col> : null }
                </Row>
             </Col>
           </Row>

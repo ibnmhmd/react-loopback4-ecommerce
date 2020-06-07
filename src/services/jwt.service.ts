@@ -32,7 +32,7 @@ export class JwtTokenService implements TokenService {
             [securityId]: decodedToken.id,
             name: decodedToken.name,
             id: decodedToken.id,
-            email: decodedToken.email,
+            email: decodedToken.email
           },
       );
     } catch (error) {

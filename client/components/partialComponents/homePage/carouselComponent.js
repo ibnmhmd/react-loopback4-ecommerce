@@ -22,24 +22,24 @@ export default class CarouselComponent extends React.Component {
       <div className="item active">
         <img className = "img-responsive" src="../static/img/banner1.jpg" alt="Chania"/>
         <div className="carousel-caption">
-          <h3>Los Angeles</h3>
-          <p>LA is always so much fun!</p>
+          <h1>Los Angeles</h1>
+          <h2>LA is always so much fun!</h2>
         </div>
       </div>
   
       <div className="item">
         <img className = "img-responsive" src="../static/img/banner2.jpg" alt="Chicago"/>
         <div className="carousel-caption">
-          <h3>Chicago</h3>
-          <p>Thank you, Chicago!</p>
+          <h1>Chicago</h1>
+          <h2>Thank you, Chicago!</h2>
         </div>
       </div>
   
       <div className="item">
         <img className = "img-responsive" src="https://demo.mythemeshop.com/ecommerce/files/2015/07/slide-2.jpg" alt="New York" />
         <div className="carousel-caption">
-          <h3>New York</h3>
-          <p>We love the Big Apple!</p>
+          <h1>New York</h1>
+          <h2>We love the Big Apple!</h2>
         </div>
       </div>
     </div>
