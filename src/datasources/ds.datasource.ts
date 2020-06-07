@@ -19,7 +19,7 @@ export class DsDataSource extends juggler.DataSource
   ) {
     const MONGO_SRV_URL = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_HOST}/${MONGODB_DB}?retryWrites=true&w=majority`;
     const MONGO_NONE_SRV_URL = `mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_FLAT_NODES}/${MONGODB_DB}?ssl=true&replicaSet=iShopCluster-shard-0&authSource=admin&retryWrites=true`;
-    dsConfig.url = MONGO_NONE_SRV_URL;
+    dsConfig.url = MONGO_SRV_URL;
     dsConfig.host = MONGODB_HOST;
     dsConfig.password = MONGODB_PASSWORD;
     dsConfig.user = MONGODB_USER;
