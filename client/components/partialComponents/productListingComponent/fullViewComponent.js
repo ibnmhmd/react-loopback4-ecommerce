@@ -1,17 +1,20 @@
 import { useState ,useEffect , useRef , useContext} from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { SuccessComponent , FailureComponent , LoaderComponent } from '../../statelessComponents/loadMoreProductsComponent';
 import {CartContext} from '../../contextAPI/cartContext';
 import BreadCrumb from '../../statelessComponents/breadCrumbsComponent';
 import Validator from '../../classes/validator';
+import ErrorModal from '../../modals/errorModalComponent';
+import Service from '../../classes/services';
 
 const validator = new Validator();
 const products = require('../../../utils/products');
+const service = new Service();
 
 function FullView (props) {
    const router = useRouter();
    const [productInfo , setProductInfo ] = useState([]);
-   const { addToCart , addToWishlist } = useContext(CartContext);
+   const { addToCart , addToWishlist , isLoggedInUser} = useContext(CartContext);
    const addToCartRef = useRef();
    const addToWishlistRef = useRef();
    /******* cart hooks */
@@ -28,6 +31,12 @@ function FullView (props) {
    const [wishlistFailed , setWishlistFailed] = useState(false);
    const [addToWishlistLabel , setAddToWishlistLabel] = useState("ADD TO WISHLIST");
     /******* ends******/
+    const [processMessage , setProcessMessage] = useState("");
+    const [ showError, setShowError] = useState(false);
+  
+    const closeModal = () => {
+      setShowError(false);
+    }
    useEffect(() => {
      let product = {} , _link = [] , sku;
      if(router.query && router.query.id) {
@@ -59,6 +68,17 @@ function FullView (props) {
     validator.disabledElem(addToCartRef);
     let itemAdded = false;
     let response = await addToCart(item , "cart");
+    if(service.sessionTimeout(response)){
+      setShowError(true);
+      setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+      setTimeout(() => {
+        Router.push("/"); 
+      }, 2000);
+    }else
+     if(!response.success) {
+      setShowError(true);
+      setProcessMessage(response.serverMessage);
+    }else
     if(response.success){
       setItemAdded(true);
       setAddingItem(false);
@@ -78,6 +98,12 @@ function FullView (props) {
     }, 4000);
   }
   const addItemToWishlist = async (item) => {
+    const loggedIn = isLoggedInUser();
+    if(!loggedIn){
+      setProcessMessage("PLEASE LOGIN TO USE THIS FEATURE .")
+      setShowError(true);
+      return false;
+    }
     setAddToWishlistLabel("ADDING ...");
     setItemAddedToWishlist(false);
     setAddingToWishlist(true);
@@ -85,6 +111,17 @@ function FullView (props) {
     validator.disabledElem(addToWishlistRef);
     let itemAdded = false;
     let response = await addToWishlist(item);
+    if(service.sessionTimeout(response)){
+      setShowError(true);
+      setProcessMessage("SESSION TIMED OUT, PLEASE LOGIN AND TRY AGAIN .");
+      setTimeout(() => {
+        Router.push("/"); 
+      }, 2000);
+    }else
+     if(!response.success) {
+      setShowError(true);
+      setProcessMessage(response.serverMessage);
+    }else
     if(response.success){
       setItemAddedToWishlist(true);
       setAddingToWishlist(false);
@@ -156,6 +193,7 @@ function FullView (props) {
                     <ProductSpecs item = {productInfo}/>
                   </div>  
                  </div>
+                 { showError ? <ErrorModal handleClose = { closeModal } show = {showError} errorMessage = {processMessage}/> : null }
              </div>
     </>)
 }

@@ -70,6 +70,7 @@ export default class SigninComponent extends React.PureComponent {
       let response = [] , self = this;
       let currentElement = JSON.parse(event.target.dataset.formdata);
       response = validate.validate(event);
+      console.log(response[0]);
         /**** remove invalid fields ****/
         if(response[0].length == 0){
            this.removeInvalidElement(currentElement);  
@@ -77,10 +78,7 @@ export default class SigninComponent extends React.PureComponent {
           /**** set the returned validation values ***/
           response[0].map((resp , index ) => {
              undefined == self.state.formFields.find((_) => _.name == resp.name) ?
-             self.setState({formFields : 
-              [...self.state.formFields , resp ] }, () => {
-                 this.handleSubmitState(!(self.state.formFields.length == 2 ));
-            }) : null;
+             this.setFields(resp) : this.updateFields(resp);
           });
           /****** ends *****/
       }   
@@ -90,24 +88,41 @@ export default class SigninComponent extends React.PureComponent {
         this.handleSubmitState(!(this.state.formFields.length == 2 ));   
       }); 
     }
+    setFields(resp){
+      this.setState({formFields : 
+        [...this.state.formFields , resp ] }, () => {
+           this.handleSubmitState(!(this.state.formFields.length == 2 ));
+      })
+    }
+    updateFields(resp){
+      let fields = this.state.formFields;
+      fields.map((_f , i ) => _f[resp.name] = resp.value );
+      this.setState({formFields : fields});
+    }
     async login() {
-      let requestData = {} , self = this ;
+      let requestData = {} , self = this, errorMsg = "" ;
       this.state.formFields.map((field , index) => {
-        requestData[field.name] = field.value;
+        requestData[field.name] = field[field.name] ? field[field.name] : field.value;
       });
         this.setState({ logingIn : true , failed : false , 
         signInLabel : "Logging in .." , showError : false,
         errorMessage : ""});
         self.handleSubmitState(true);
-       await service.post({url : API.LOGIN , requestBody : requestData}).then( async (response) => {
-          self.handleSubmitState(true);
-          self.setState({signInLabel : "Successfully LoggedIn." , logingIn : false , loggedIn : true });
-          localStorage.setItem("iShopUserToken" , response.data.token); 
-          console.log("Calling get profile");
-           await self.getProfile(response.data.token); 
+       await service.post({url : API.LOGIN , requestBody : requestData, headers : {'Content-Type': 'application/json'}}).then( async (response) => {
+          if(response.data.response.success){
+            self.handleSubmitState(true);
+            self.setState({signInLabel : "Successfully LoggedIn." , logingIn : false , loggedIn : true });
+            localStorage.setItem("iShopUserToken" , response.data.response.token); 
+             await self.getProfile(response.data.response.token); 
+          }else{
+            errorMsg = response.data.response.message;
+            self.handleSubmitState(false);
+            localStorage.removeItem("iShopUserToken"); 
+            self.setState({signInLabel : "Login" , logingIn : false , loggedIn : false, showError : true , errorMessage : errorMsg , failed : true });
+          }
         })
         .catch( (error) => {
-          let errorMsg = "" , code = "";
+           let code = "";
           if(error && error.response && 422 == error.response.status) {
             errorMsg = `Error : ${error.response.data.error.message}`;
           }
@@ -128,7 +143,12 @@ export default class SigninComponent extends React.PureComponent {
             self.saveCustomerProfileLocally( profile.data );
             Router.push('/');
           }).catch((err) => {
-            console.error("Error :: " + err);
+            if(401 == err.response.status){
+              let error = err.response.data.error.message;
+              self.setState({signInLabel : "Login" , loggedIn : false , logingIn : false , 
+              showError : true , errorMessage : 'Error getting user profile, please try again .'  , failed : true });
+              self.handleSubmitState(false);
+            }
           });
        }
        saveCustomerProfileLocally (data) {
@@ -156,7 +176,6 @@ export default class SigninComponent extends React.PureComponent {
                              </a> 
                             </Form.Group>
                             {this.state.showError ? <Form.Group controlId="formBasicPassword" className = "col-xs-7 reg-error">{this.state.errorMessage}</Form.Group> : null }
-                        
                         </Form> 
                       </div>  
                      </div>                 

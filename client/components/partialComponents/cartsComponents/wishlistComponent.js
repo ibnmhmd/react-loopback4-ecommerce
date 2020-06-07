@@ -1,7 +1,6 @@
 import { useState ,useEffect, useContext  } from 'react';
 import CustomButton from '../../statelessComponents/customButtonComponent';
 import Router from 'next/router';
-import {LoaderComponent , SuccessComponent , FailureComponent } from '../../statelessComponents/loadMoreProductsComponent';
 import {CartContext} from '../../contextAPI/cartContext';
 import EmptyBasket from './commonComponents/emptyBasketComponent';
 import {WishlistItemDrawer} from './commonComponents/itemDrawerComponent';
@@ -10,7 +9,6 @@ function WishlistComponent (props) {
    const [productInfo , setProductInfo ] = useState([]);
    const { getWishlist , addToCart , deleteFromWishlist } = useContext(CartContext);
    useEffect(() => {
-      debugger
      setProductInfo(getWishlist());
    },[]);
    
@@ -27,12 +25,12 @@ function WishlistComponent (props) {
           <div className="container-fluid __productlisting __cart_wrapper">
                  <div className="row">
                       <div className="col-xs-12 col-md-8">
-                          <div className ="__cart_items_header">Items in Wish List ({productInfo.length})</div>
+                          <div className ="__cart_items_header">Items in Wishlist ({productInfo.length})</div>
                            <div className="row"> 
                             { productInfo.map ((item , index) => {
                               return  <WishlistItemDrawer itemInWishlist = {item} key = {index} deleteItem = {deleteFromWishlist} addToCart = {addToCart} updateWishlist = {updateWishlist}/>
                             })} 
-                            {productInfo.length == 0 ? <EmptyBasket name = "Wish List"/> : null } 
+                            {productInfo.length == 0 ? <EmptyBasket name = "Wishlist"/> : null } 
                           </div>                         
                       </div>
                       <div className="col-xs-12 col-md-4"> 

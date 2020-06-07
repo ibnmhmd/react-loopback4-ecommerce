@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "stable"
+branches:
+only:
+  - dev
+before_script:
+  - npm i -g npm@latest
+cache:
+  npm : false
+after_script:
+  - npm run build

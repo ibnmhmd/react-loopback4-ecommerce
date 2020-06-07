@@ -1,7 +1,10 @@
+const CUST = require('./customerManager');
 const getCartSize = () => {
     let size = 0 ;
     if (typeof window !== 'undefined') {
-        console.log('we are running on the client');
+        if(CUST.isLoggedInUser()){
+            size = getCustomerCartSize("cart");
+        }else
         if(localStorage.getItem("iShopCart")){
             try {
                  size = JSON.parse(localStorage.getItem("iShopCart")).length;
@@ -20,7 +23,9 @@ const getCartSize = () => {
 const getSavedForLaterSize = () => {
     let size = 0 ;
     if (typeof window !== 'undefined') {
-        console.log('we are running on the client');
+        if(CUST.isLoggedInUser()){
+            size = getCustomerCartSize("savedForLater");
+        }else
         if(localStorage.getItem("iShopSavedForLater")){
             try {
                  size = JSON.parse(localStorage.getItem("iShopSavedForLater")).length;
@@ -77,6 +82,10 @@ const deleteFromWishlist = (sku) => {
 }
 const getCart = () => {
     if(getCartSize() !== 0 ){
+        if(CUST.isLoggedInUser()){
+           const customerProfile = CUST.getCustomerProfile();
+           return customerProfile.basket.cart.items
+        }
         return JSON.parse(localStorage.getItem("iShopCart"));
     }else{
         return new Array();
@@ -84,6 +93,10 @@ const getCart = () => {
 }
 const getWishlist = () => {
     if(getWishlistSize() !== 0 ){
+        if(CUST.isLoggedInUser()){
+            const customerProfile = CUST.getCustomerProfile();
+            return customerProfile.basket.wishlist.items;
+         }
         return JSON.parse(localStorage.getItem("iShopWishlist"));
     }else{
         return new Array();
@@ -92,7 +105,9 @@ const getWishlist = () => {
 const getWishlistSize = () => {
     let size = 0 ;
     if (typeof window !== 'undefined') {
-        console.log('we are running on the client');
+        if(CUST.isLoggedInUser()){
+            size = getCustomerCartSize("wishlist");
+        }else
         if(localStorage.getItem("iShopWishlist")){
             try {
                  size = JSON.parse(localStorage.getItem("iShopWishlist")).length;
@@ -102,13 +117,15 @@ const getWishlistSize = () => {
        }else{
            initCart("iShopWishlist");
        }
-    } else {
-        console.log('we are running on the server');
     }  
     return size;
 }
 const getSavedForLater = () => {
     if(getSavedForLaterSize() !== 0 ){
+        if(CUST.isLoggedInUser()){
+            const customerProfile = CUST.getCustomerProfile();
+            return customerProfile.basket.savedForLater.items;
+         }
         return JSON.parse(localStorage.getItem("iShopSavedForLater"));
     }else{
         return new Array();
@@ -183,6 +200,23 @@ const deleteFromSavedForLater = (sku) => {
     }
     return deleted;
 }
+const getCustomerCartSize = (target) => {
+  const profile = CUST.getCustomerProfile();
+  if(profile && profile.basket){
+      switch(target){
+          case "cart":
+            return profile.basket.cart ? profile.basket.cart.items.length : 0;
+          case "wishlist":
+            return profile.basket.wishlist ? profile.basket.wishlist.items.length : 0;
+          case "savedForLater":
+            return profile.basket.savedForLater ? profile.basket.savedForLater.items.length : 0;
+          default:
+              return 0;
+      }
+  }else{
+      return 0;
+  }
+}
 module.exports = {
   getCartSize,
   addToCart,
@@ -200,5 +234,6 @@ module.exports = {
   addToWishlist,
   getWishlist,
   deleteFromWishlist,
-  getWishlistSize
+  getWishlistSize,
+  getCustomerCartSize
 }

@@ -1,0 +1,11 @@
+@import "./colors.scss";
+
+.reg-error {
+    color: $isc_red;
+    font-weight : 600;
+    border-radius: 3px;
+    background: $isc_shadow_gray ;
+}
+.is_t_center{
+    text-align: center;
+}

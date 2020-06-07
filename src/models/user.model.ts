@@ -1,7 +1,8 @@
 import {Entity, model, property, hasOne} from '@loopback/repository';
 import {UserCredentials} from './user-credentials.model';
+import {Basket} from './basket.model';
 
-@model({settings: {strict: false}})
+@model({settings: { strict: false } , name : 'users'})
 export class User extends Entity {
   @property({
     type: 'string',
@@ -31,8 +32,11 @@ export class User extends Entity {
   })
   _id?: any;
 
-  @hasOne(() => UserCredentials)
+  @hasOne(() => UserCredentials , { keyTo : 'usersId'})
   userCredentialsGetter: UserCredentials;
+
+  @hasOne(() => Basket, { keyTo : 'usersId'})
+  basket: Basket;
   // Define well-known properties here
 
   // Indexer property to allow additional data

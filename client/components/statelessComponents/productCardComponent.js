@@ -4,6 +4,7 @@ import ItemQuickView from '../../components/modals/itemQuickViewModalComponent';
 import {CartContext} from '../contextAPI/cartContext';
 import Router from 'next/router';
 import Validator from '../classes/validator';
+import ErrorModal from '../modals/errorModalComponent';
 import {SuccessComponent, LoaderComponent , FailureComponent} from '../statelessComponents/loadMoreProductsComponent';
 const wishListTooltip = (
     <Tooltip id="tooltip">
@@ -21,7 +22,7 @@ const validator = new Validator();
 const ProductCard = (props) => {
     const [showItemModal , setShowItemModal ] = useState(false);
     const [ itemData , setItemData ] = useState ({});
-    const { addToCart , addToWishlist , getCartSize} = useContext(CartContext);
+    const { addToCart , addToWishlist , isLoggedInUser} = useContext(CartContext);
     /******* cart hooks */
     const [addingItem , setAddingItem] = useState(false);
     const [itemAdded , setItemAdded] = useState(false);
@@ -29,7 +30,22 @@ const ProductCard = (props) => {
     const [addToCartLabel , setAddToCartLabel] = useState("ADD TO CART");
     const addRef = useRef();
     /******* ends******/
+    /****** wishlist message hooks ****/
+    const [processMessage , setProcessMessage] = useState("");
+    const [ showError, setShowError] = useState(false);
 
+  const closeModal = () => {
+    setShowError(false);
+  }
+ const addItemToWishlist = (item) => {
+  const loggedIn = isLoggedInUser();
+  if(!loggedIn){
+    setProcessMessage("PLEASE LOGIN TO USE THIS FEATURE .")
+    setShowError(true);
+    return false;
+  }
+  addToWishlist(item);
+ }
  const quickViewItem = (props) => {
     setShowItemModal(true);
     setItemData(props);
@@ -73,13 +89,13 @@ const addItemToCart = async (item) => {
                <a ref = {addRef} className="btn btn-primary __item_listing_card_add_to_cart" onClick = { () => addItemToCart(props.productInfo) }> {addToCartLabel}</a>
                                { itemAdded ?  <SuccessComponent label = "" paragraph = {false} class = "instock"/> : null } 
                                { addingItem ? <LoaderComponent label = "" paragraph = {false}/> : null }
-                               { itemFailed ? <FailureComponent label = "" paragraph = {false} class = "outofstock"/> : null } 
+                               { itemFailed ? <FailureComponent label = "" paragraph = {false} class = "outofstock"/> : null }           
            </div> 
            
               {/**** overlay starts*****/}
            <span className = "__item_listing_card_overlay">
              <OverlayTrigger placement="top" overlay={wishListTooltip}>
-              <i className="far fa-heart" onClick = { () => addToWishlist(props.productInfo) } ></i>
+              <i className="far fa-heart" onClick = { () => addItemToWishlist(props.productInfo) } ></i>
             </OverlayTrigger>
             <OverlayTrigger placement="top" overlay={quickViewTooltip}>
                <i className="far fa-eye"  onClick = { () => quickViewItem(props.productInfo)}></i>
@@ -88,6 +104,7 @@ const addItemToCart = async (item) => {
            {/**** ends ******/}
        </div>
        { showItemModal ?  <ItemQuickView onHide= { onHide } showModal = { showItemModal } item = { itemData } breadCrumb = {props.breadCrumb}/> : null }
+       { showError ? <ErrorModal handleClose = { closeModal } show = {showError} errorMessage = {processMessage}/> : null }
     </div>
    );
 }

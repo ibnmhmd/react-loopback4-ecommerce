@@ -82,6 +82,7 @@ let product = new Array() , obj = {} , brands = ["Guice" , "Nike" , "Sony" , "So
         obj.comments = comments[i];
         product.push(obj);
      }
+
      const getBestSellers = () => {
          return getProducts();
      }

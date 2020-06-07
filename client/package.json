@@ -7,6 +7,7 @@
     "start": "next start",
     "export": "next export",
     "deploy-client": "yarn build && yarn export && yarn copy",
+    "deploy-heroku": "npm run build && npm run export && npm run copy",
     "copy": "shx cp -r out/* ../public/"
   },
   "dependencies": {
@@ -17,16 +18,17 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "formik": "^2.1.4",
-    "next": "^9.3.2",
-    "react": "^16.12.0",
+    "next": "^9.4.2",
+    "react": "^16.13.1",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-bootstrap-range-slider": "^0.3.1",
-    "react-dom": "^16.12.0",
+    "react-dom": "^16.13.1",
     "react-input-range": "^1.3.0",
     "react-responsive-carousel": "^3.1.39",
     "react-slick": "^0.23.1",
-    "slick-carousel": "^1.8.1",
-    "shx": "^0.3.2"
+    "sass": "^1.26.5",
+    "shx": "^0.3.2",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "shx": "^0.3.2"

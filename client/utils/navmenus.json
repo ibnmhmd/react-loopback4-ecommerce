@@ -1,0 +1,513 @@
+{
+    "menus":[
+       {
+          "name":"home",
+          "path":"/",
+          "rootClass":"__navbar_home_link",
+          "show":true,
+          "href":"/",
+          "as":"/"
+       },
+       {
+          "name":"men",
+          "rootNavigation":"products",
+          "navigationMapper":"/products/[id]",
+          "show":true,
+          "as":"/products/men",
+          "href":"/products/[id]",
+          "rootClass":"dropdown mega-dropdown",
+          "innerClass":"dropdown-toggle",
+          "toggle":true,
+          "toggleClass":"dropdown",
+          "children":[
+             {
+                "name":"collections",
+                "type":"collections",
+                "requireInnerSliders":true,
+                "root":"men",
+                "show":true,
+                "children":[
+                   {
+                      "image":"https://images-eu.ssl-images-amazon.com/images/I/51RZAz12utL._AA200_.jpg",
+                      "name":"Summer dress floral prints",
+                      "price":49.99,
+                      "class":"item active"
+                   },
+                   {
+                      "image":"https://images-eu.ssl-images-amazon.com/images/I/51nvv5VSUsL._AA200_.jpg",
+                      "name":"Fifth Sun Official Liverpool FC Vintage Reds Men's Tee, Heather, Medium",
+                      "price":75.5,
+                      "class":"item"
+                   },
+                   {
+                      "image":"https://images-eu.ssl-images-amazon.com/images/I/41aese32iYL._AA200_.jpg",
+                      "name":"DADIJIER Brogue Ankle Boot for Men Motorcycle Boots Genuine Leather Lace up ...",
+                      "price":238,
+                      "class":"item"
+                   }
+                ]
+             },
+             {
+                "name":"clothing",
+                "type":"clothing",
+                "show":true,
+                "requireInnerSliders":false,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all clothing"
+                   },
+                   {
+                      "show":true,
+                      "name":"tees & polos"
+                   },
+                   {
+                      "show":true,
+                      "name":"shirts"
+                   },
+                   {
+                      "show":true,
+                      "name":"sports wear"
+                   },
+                   {
+                      "show":true,
+                      "name":"jeans"
+                   },
+                   {
+                      "show":true,
+                      "name":"shorts"
+                   },
+                   {
+                      "show":true,
+                      "name":"pants"
+                   },
+                   {
+                      "show":true,
+                      "name":"under wear"
+                   }
+                ]
+             },
+             {
+                "name":"shoes",
+                "type":"shoes",
+                "requireInnerSliders":false,
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all shoes"
+                   },
+                   {
+                      "show":true,
+                      "name":"loafers & slip-ons"
+                   },
+                   {
+                      "show":true,
+                      "name":"boots"
+                   },
+                   {
+                      "show":true,
+                      "name":"sandals"
+                   },
+                   {
+                      "show":true,
+                      "name":"formal shoes"
+                   },
+                   {
+                      "show":true,
+                      "name":"casual shoes"
+                   }
+                ]
+             },
+             {
+                "name":"watches & accessories",
+                "type":"watches & accessories",
+                "requireInnerSliders":false,
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all accessories"
+                   },
+                   {
+                      "show":true,
+                      "name":"sunglasses"
+                   },
+                   {
+                      "show":true,
+                      "name":"jewellery"
+                   },
+                   {
+                      "show":true,
+                      "name":"bags and wallets"
+                   },
+                   {
+                      "show":true,
+                      "name":"luggage sets"
+                   },
+                   {
+                      "show":true,
+                      "name":"casual shoes"
+                   }
+                ]
+             }
+          ]
+       },
+       {
+          "name":"women",
+          "rootNavigation":"products",
+          "navigationMapper":"/products/[id]",
+          "show":true,
+          "as":"/products/women",
+          "href":"/products/[id]",
+          "rootClass":"dropdown mega-dropdown",
+          "innerClass":"dropdown-toggle",
+          "toggle":true,
+          "toggleClass":"dropdown",
+          "children":[
+             {
+                "name":"clothing",
+                "type":"clothing",
+                "show":true,
+                "requireInnerSliders":false,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all clothing"
+                   },
+                   {
+                      "show":true,
+                      "name":"shirts, tops & tees"
+                   },
+                   {
+                      "show":true,
+                      "name":"dresses"
+                   },
+                   {
+                      "show":true,
+                      "name":"arabian wear"
+                   },
+                   {
+                      "show":true,
+                      "name":"sports wear"
+                   },
+                   {
+                      "show":true,
+                      "name":"jeans"
+                   },
+                   {
+                      "show":true,
+                      "name":"skirts"
+                   },
+                   {
+                      "show":true,
+                      "name":"jackets & coats"
+                   },
+                   {
+                      "show":true,
+                      "name":"underwear, lingerie & sleepwear"
+                   }
+                ]
+             },
+             {
+                "name":"shoes",
+                "type":"shoes",
+                "requireInnerSliders":false,
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all shoes"
+                   },
+                   {
+                      "show":true,
+                      "name":"loafers & slip-ons"
+                   },
+                   {
+                      "show":true,
+                      "name":"boots"
+                   },
+                   {
+                      "show":true,
+                      "name":"sandals"
+                   },
+                   {
+                      "show":true,
+                      "name":"flats"
+                   },
+                   {
+                      "show":true,
+                      "name":"pumps"
+                   }
+                ]
+             },
+             {
+                "name":"watches & accessories",
+                "type":"watches & accessories",
+                "requireInnerSliders":false,
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all accessories"
+                   },
+                   {
+                      "show":true,
+                      "name":"sunglasses"
+                   },
+                   {
+                      "show":true,
+                      "name":"jewellery"
+                   },
+                   {
+                      "show":true,
+                      "name":"bags and wallets"
+                   },
+                   {
+                      "show":true,
+                      "name":"luggage sets"
+                   },
+                   {
+                      "show":true,
+                      "name":"body care"
+                   },
+                   {
+                      "show":true,
+                      "name":"make-up"
+                   }
+                ]
+             },
+             {
+                "name":"collections",
+                "type":"collections",
+                "requireInnerSliders":true,
+                "root":"women",
+                "show":true,
+                "children":[
+                   {
+                      "image":"https://images-eu.ssl-images-amazon.com/images/I/317TZPdju8L._AA200_.jpg",
+                      "name":"Roberto Cavalli Paradiso - perfumes for women - Eau de Parfum, 75ml",
+                      "price":103.58,
+                      "class":"item active"
+                   },
+                   {
+                      "image":"https://images-eu.ssl-images-amazon.com/images/I/41MadHhMcjL._AC_SX184_.jpg",
+                      "name":"Wish by Chopard for Women - Eau de Parfum, 75 ml",
+                      "price":65.5,
+                      "class":"item"
+                   },
+                   {
+                      "image":"https://images-eu.ssl-images-amazon.com/images/I/51--WVEXjdL._AC_SX184_.jpg",
+                      "name":"Roberto Cavalli - perfumes for women - Eau de Parfum, 50ML",
+                      "price":83,
+                      "class":"item"
+                   }
+                ]
+             }
+          ]
+       },
+       {
+          "name":"electronics",
+          "rootNavigation":"products",
+          "navigationMapper":"/products/[id]",
+          "show":true,
+          "as":"/products/electronics",
+          "href":"/products/[id]",
+          "rootClass":"dropdown mega-dropdown",
+          "innerClass":"dropdown-toggle",
+          "toggle":true,
+          "toggleClass":"dropdown",
+          "children":[
+             {
+                "name":"mobiles",
+                "type":"mobiles",
+                "show":true,
+                "requireInnerSliders":false,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all mobiles"
+                   },
+                   {
+                      "show":true,
+                      "name":"apple"
+                   },
+                   {
+                      "show":true,
+                      "name":"samsung"
+                   },
+                   {
+                      "show":true,
+                      "name":"lenovo"
+                   },
+                   {
+                      "show":true,
+                      "name":"oppo"
+                   },
+                   {
+                      "show":true,
+                      "name":"vivo"
+                   },
+                   {
+                      "show":true,
+                      "name":"huawei"
+                   },
+                   {
+                      "show":true,
+                      "name":"realme"
+                   },
+                   {
+                      "show":true,
+                      "name":"nokia"
+                   },
+                   {
+                      "show":true,
+                      "name":"mobile accessories"
+                   }
+                ]
+             },
+             {
+                "name":"computers",
+                "type":"computers",
+                "requireInnerSliders":false,
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all computers"
+                   },
+                   {
+                      "show":true,
+                      "name":"apple"
+                   },
+                   {
+                      "show":true,
+                      "name":"hp"
+                   },
+                   {
+                      "show":true,
+                      "name":"dell"
+                   },
+                   {
+                      "show":true,
+                      "name":"lenovo"
+                   },
+                   {
+                      "show":true,
+                      "name":"samsung"
+                   },
+                   {
+                      "show":true,
+                      "name":"toshiba"
+                   },
+                   {
+                      "show":true,
+                      "name":"microsoft"
+                   },
+                   {
+                      "show":true,
+                      "name":"sony"
+                   }
+                ]
+             },
+             {
+                "name":"televisions",
+                "type":"televisions",
+                "requireInnerSliders":false,
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all televisions"
+                   },
+                   {
+                      "show":true,
+                      "name":"lg"
+                   },
+                   {
+                      "show":true,
+                      "name":"samsung"
+                   },
+                   {
+                      "show":true,
+                      "name":"philips"
+                   },
+                   {
+                      "show":true,
+                      "name":"sony"
+                   },
+                   {
+                      "show":true,
+                      "name":"tcl"
+                   },
+                   {
+                      "show":true,
+                      "name":"others"
+                   }
+                ]
+             },
+             {
+                "name":"home electronics",
+                "type":"home electronics",
+                "requireInnerSliders":false,
+                "root":"electronics",
+                "show":true,
+                "children":[
+                   {
+                      "show":true,
+                      "name":"all home electronics"
+                   },
+                   {
+                      "show":true,
+                      "name":"fridges"
+                   },
+                   {
+                      "show":true,
+                      "name":"microwaves"
+                   },
+                   {
+                      "show":true,
+                      "name":"laundry machines"
+                   },
+                   {
+                      "show":true,
+                      "name":"ovens"
+                   },
+                   {
+                      "show":true,
+                      "name":"home theatres"
+                   },
+                   {
+                      "show":true,
+                      "name":"others"
+                   }
+                ]
+             }
+          ]
+       },
+       {
+          "name":"events",
+          "path":"/ishop/events",
+          "rootClass":"__navbar_home_link",
+          "show":true,
+          "href":"/ishop/events",
+          "as":"/ishop/events"
+       },
+       {
+          "name":"store locator",
+          "path":"/ishop/locations",
+          "rootClass":"__navbar_home_link",
+          "show":true,
+          "href":"/ishop/locations",
+          "as":"/ishop/locations"
+       },
+       {
+          "name":"today's offer",
+          "path":"/ishop/ioffers",
+          "rootClass":"__navbar_home_link",
+          "show":true,
+          "href":"/ishop/ioffers",
+          "as":"/ishop/ioffers"
+       }
+    ]
+ }
