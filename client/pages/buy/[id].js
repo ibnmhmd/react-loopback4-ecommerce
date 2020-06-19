@@ -9,7 +9,7 @@ export default function ProductListing() {
         console.log("cart size :: ")
     });
         return (
-             <Wrapper title = "List Products" description = "Checkout page for the project">
+             <Wrapper title = "Checkout items" description = "Checkout page for iBoutique">
              <div className="container __registeration">
                <Checkout />        
              </div>

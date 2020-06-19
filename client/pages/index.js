@@ -19,7 +19,7 @@ export default class Index extends React.Component {
   render() {
     
     return (
-      <Wrapper title = "Home Page" description = "Home page for the project">
+      <Wrapper title = "Home Page" description = "iBoutique's home page">
       {/******* main banners with carousel starts *****/}
       <CarouselComponent key = {1}/>
       {/******* main banners with carousel ends *****/}

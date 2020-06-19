@@ -28,9 +28,11 @@ function Checkout (props) {
     const placeOrderRef = useRef();
     useEffect(()=> {
       setCheckoutItems(getCheckout());
-      confirmBakset({key : "deliveryAddressConfirmed" ,confirmed : false });
-      confirmBakset({key : "paymentConfirmed" ,confirmed : false });
-      confirmBakset({key : "summaryConfirmed" ,confirmed : false });
+      const initBasket = [{key : "deliveryAddressConfirmed" ,confirmed : false }, {key : "paymentConfirmed" ,confirmed : false },{key : "summaryConfirmed" ,confirmed : false } ];
+      initBasket.map((init , idx) => {
+        confirmBakset(init);
+      });
+
     },[]);
     const openCart = () => {
         Router.push("/cart/my-cart");
@@ -40,9 +42,7 @@ function Checkout (props) {
     }
     const flushBasket = () => {
         clearBasket();
-        setTimeout(() => {
-            Router.push("/");   
-        }, 1000);     
+        Router.push("/");     
     }
 
     const placeOrder = async () => {
