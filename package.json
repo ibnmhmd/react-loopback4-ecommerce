@@ -60,7 +60,7 @@
     "loopback-connector-mongodb": "^4.2.0",
     "loopback-connector-redis": "^3.0.0",
     "nodemon": "^2.0.3",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "shx": "^0.3.2",
     "tslib": "^2.0.0",
     "typescript": "~3.9.3",
